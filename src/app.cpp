@@ -300,7 +300,10 @@ void init() {
     // Shift+W/A/S/D move the free cursor (cursor.*), not the character: the press is ours. The RELEASE always
     // passes: a W held before Shift went down is the game's own move, and swallowing its release would leave the
     // exe's held byte set (the character runs on) -- a spurious up for a key the game never saw down is harmless.
-    if ((code == 0x11 || code == 0x1e || code == 0x1f || code == 0x20) && !released && shift) return false;
+    // A text field being typed into (captures_raw_input) is exempt: there Shift+D is a capital D, and swallowing
+    // the press lost the letter ("DELETE" typed as "ELETE").
+    if ((code == 0x11 || code == 0x1e || code == 0x1f || code == 0x20) && !released && shift && !s->captures_raw_input())
+      return false;
     // Ctrl+<digit> is the mod's quickbar-read chord (read.slot1..10), never the game's -- the game binds
     // single buttons only, so it never wants a modified digit. The passthrough is by code alone (modifier
     // blind), so without this a real Ctrl+1 would ALSO activate the game's slot 1 you only meant to read.

@@ -1195,3 +1195,12 @@ CLAUDE.md "Traps and lessons"; the mechanism docs are `docs/*.md`.
   nearest reachable point of its partial route instead. Not fixed.
 - Dev keys now take the player's path (`SynthKey::player`, see above); our follow statics can be read live by
   resolving them in the PDB (dbghelp `SymEnumSymbols` on the injected grimdark.dll) and `/peek`.
+
+## 2026-10-06: capital W/A/S/D lost in text fields
+- Report: typing `DELETE` into the delete confirmation gave "ELETE"; a character could not be named David. The game-key
+  filter's Shift+W/A/S/D rule (the free cursor's chord, 2026-09-20) swallowed the press on every screen, after the edit
+  session had passed the key; the game takes the character from the press event, so the letter was lost (the mod's echo
+  still spoke it). The rule now skips a screen that `captures_raw_input()` (an active edit field).
+- Verified live with dev keys (which take the filter since 2026-10-05): before, "DavidWASDwasd" landed as "avidwasd";
+  after, verbatim; a throwaway "David" was created and deleted by typing `DELETE`. The world path is unchanged (the
+  in-game screen never captures raw input); Shift+W/A/S/D in the world was not re-tested live.

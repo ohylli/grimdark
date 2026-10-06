@@ -2,6 +2,7 @@
 
 - Fix: `l` walks to places that sit just off the walkable ground, such as a mine or cave entrance picked from the map. Before, the game refused the walk and nothing happened.
 - Fix: skill tooltips at a spirit guide (reclaiming skill points) are the full ones again, including what the next level gives, followed by the reclaim cost.
+- Fix: capital W, A, S and D can be typed into the character name and the delete confirmation fields. Before, they were dropped, so `DELETE` came out as "ELETE" and a character could not be named David.
 
 # 0.5.3 (2026-10-05)
 
